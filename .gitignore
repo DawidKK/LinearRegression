@@ -1,0 +1,17 @@
+.venv/
+__pycache__/
+*.py[cod]
+.DS_Store
+
+# Local data and generated artifacts
+data/raw/*
+data/processed/*
+models/*
+reports/figures/*
+
+# Keep directory placeholders
+!data/raw/.gitkeep
+!data/raw/housing_prices_sample.csv
+!data/processed/.gitkeep
+!models/.gitkeep
+!reports/figures/.gitkeep
