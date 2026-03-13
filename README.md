@@ -58,3 +58,17 @@ make test
 make train
 make notebook
 ```
+
+## Polynomial Regression Practice
+
+Run the polynomial degree comparison (default: degrees 1..5):
+
+```bash
+uv run python scripts/train_housing_polynomial.py
+```
+
+Or via Make:
+
+```bash
+make train-poly
+```

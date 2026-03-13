@@ -1,4 +1,4 @@
-.PHONY: sync lint test train notebook format
+.PHONY: sync lint test train train-poly notebook format
 
 sync:
 	uv sync
@@ -14,6 +14,9 @@ test:
 
 train:
 	uv run python scripts/train_baseline.py
+
+train-poly:
+	uv run python scripts/train_housing_polynomial.py
 
 notebook:
 	uv run jupyter lab

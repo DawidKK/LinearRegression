@@ -3,6 +3,7 @@ from dataclasses import dataclass
 import pandas as pd
 from sklearn.linear_model import LinearRegression
 from sklearn.metrics import r2_score, root_mean_squared_error
+from sklearn.preprocessing import PolynomialFeatures
 
 from .data import load_housing_univariate_feature_target
 from .preprocessing import split_regression_data
@@ -21,6 +22,21 @@ class HousingLinearRegressionResult:
     r2: float
     coefficient: float
     intercept: float
+
+
+@dataclass
+class HousingPolynomialRegressionResult:
+    # Keep complete artifacts per degree for comparison, plotting, and interpretation.
+    degree: int
+    model: LinearRegression
+    polynomial_features: PolynomialFeatures
+    x_train: pd.DataFrame
+    x_test: pd.DataFrame
+    y_train: pd.Series
+    y_test: pd.Series
+    test_predictions: pd.Series
+    rmse: float
+    r2: float
 
 
 def train_housing_univariate_linear_regression(
@@ -59,3 +75,58 @@ def train_housing_univariate_linear_regression(
         coefficient=float(model.coef_[0]),
         intercept=float(model.intercept_),
     )
+
+
+def train_housing_univariate_polynomial_regression(
+    min_degree: int = 1,
+    max_degree: int = 5,
+    test_size: float = 0.2,
+    random_state: int = 42,
+    csv_path: str = "data/raw/housing_prices_sample.csv",
+) -> list[HousingPolynomialRegressionResult]:
+    if min_degree < 1:
+        raise ValueError("min_degree must be >= 1")
+    if max_degree < min_degree:
+        raise ValueError("max_degree must be >= min_degree")
+
+    # Use one feature only: year_built -> price_usd.
+    features, target = load_housing_univariate_feature_target(csv_path=csv_path)
+
+    # Keep one split for all degrees to compare models on the exact same data.
+    x_train, x_test, y_train, y_test = split_regression_data(
+        features,
+        target,
+        test_size=test_size,
+        random_state=random_state,
+    )
+
+    results: list[HousingPolynomialRegressionResult] = []
+
+    for degree in range(min_degree, max_degree + 1):
+        polynomial_features = PolynomialFeatures(degree=degree, include_bias=False)
+        x_train_polynomial = polynomial_features.fit_transform(x_train)
+        x_test_polynomial = polynomial_features.transform(x_test)
+
+        model = LinearRegression()
+        model.fit(x_train_polynomial, y_train)
+
+        test_predictions = pd.Series(model.predict(x_test_polynomial), index=y_test.index)
+        rmse = float(root_mean_squared_error(y_test, test_predictions))
+        r2 = float(r2_score(y_test, test_predictions))
+
+        results.append(
+            HousingPolynomialRegressionResult(
+                degree=degree,
+                model=model,
+                polynomial_features=polynomial_features,
+                x_train=x_train,
+                x_test=x_test,
+                y_train=y_train,
+                y_test=y_test,
+                test_predictions=test_predictions,
+                rmse=rmse,
+                r2=r2,
+            )
+        )
+
+    return results
