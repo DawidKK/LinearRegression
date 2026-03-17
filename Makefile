@@ -1,4 +1,4 @@
-.PHONY: sync lint test train train-poly train-multi train-multi-scaled notebook format
+.PHONY: sync lint test train train-poly train-multi train-multi-scaled train-ridge-sweep notebook format
 
 sync:
 	uv sync
@@ -26,3 +26,6 @@ train-multi-scaled:
 
 notebook:
 	uv run jupyter lab
+
+train-ridge-sweep:
+	uv run python scripts/train_housing_ridge_alpha_sweep.py
