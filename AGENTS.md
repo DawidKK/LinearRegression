@@ -1,112 +1,276 @@
 # AGENTS.md
 
-## Project Context
+## 🎯 Purpose
 
-This project is part of my machine learning learning journey.
-I am learning ML from a **low-level perspective** and want to understand how algorithms work internally before using complex models.
+This project is focused on **learning logistic regression step-by-step**, not optimizing performance.
 
-I already implemented:
+The goal is to:
 
-- Linear Regression (from scratch)
-- Logistic Regression (from scratch)
+- Understand how the model behaves under different conditions
+- Compare results across multiple experiments
+- Build strong intuition through controlled changes
 
-Now I want to practice using models from **scikit-learn**, but still progress gradually from simple models to more complex ones.
-
----
-
-## Learning Goals
-
-The goal of this repository is **not just to get the best performance**, but to **build intuition about machine learning models**.
-
-I want to:
-
-1. Start with simple linear models
-2. Understand how regularization works
-3. Compare simple vs complex models
-4. Observe where simple models fail
-5. Gradually move to more powerful models
+⚠️ Important:
+Each step must be **comparable** to the previous ones.
 
 ---
 
-## Preferred Model Progression
+## 🧠 Learning Philosophy (Feynman Method)
 
-Models should generally be introduced in this order:
+All explanations and code must:
 
-1. Linear Regression
-2. Ridge Regression (L2 regularization)
-3. Lasso Regression (L1 regularization)
-4. Elastic Net
-5. Logistic Regression (for classification)
-6. Decision Trees
-7. Random Forest
-8. Gradient Boosting
-9. XGBoost / LightGBM (later)
+- Use **simple, intuitive language**
+- Explain:
+  - What is happening
+  - Why it is happening
 
-Avoid jumping directly to complex models unless explicitly requested.
+- Break down complex ideas step-by-step
+- Avoid unnecessary jargon
+
+If something is complex → simplify it.
 
 ---
 
-## Coding Preferences
+## 📊 Dataset
 
-When generating code:
+Use only:
 
-- Keep implementations **simple and readable**
-- Prefer **explicit steps over magic abstractions**
-- Avoid overly complex pipelines unless needed
-- Add comments explaining what is happening
-
-I want to **understand the code**, not just run it.
+```python
+from sklearn.datasets import load_breast_cancer
+```
 
 ---
 
-## Experimentation Goals
+## 🧪 Experiment Structure (CRITICAL)
 
-For each model I want to practice:
+Each experiment must follow the **same structure** so results are comparable.
 
-- Train/test split
-- Model training
-- Model evaluation
-- Hyperparameter tuning
-- Comparing model performance
+### Required Steps in EVERY experiment:
 
-Important metrics to use:
+1. Data split (train/test)
+2. (Optional) Feature scaling
+3. Model training
+4. Predictions:
+   - `predict`
+   - `predict_proba`
 
-Regression:
+5. Evaluation metrics:
+   - Accuracy
+   - Precision
+   - Recall
+   - F1-score
+   - ROC-AUC
 
-- RMSE
-- R²
-
-Classification:
-
-- Accuracy
-- Precision
-- Recall
-- ROC AUC
-
----
-
-## Regularization Practice
-
-When working with linear models, include experiments with:
-
-- Ridge (L2 regularization)
-- Lasso (L1 regularization)
-
-Focus on understanding:
-
-- the effect of the regularization parameter (`alpha`)
-- how coefficients change
-- when features are removed by Lasso
+6. Confusion matrix
+7. Visualization
+8. Coefficient analysis (if applicable)
 
 ---
 
-## Guidance for AI Assistance
+## 📈 Required Visualizations (EVERY STEP)
 
-When assisting in this project:
+Each experiment MUST include:
 
-- Prefer **teaching-oriented explanations**
-- Suggest experiments instead of only solutions
-- Encourage comparison between models
-- Avoid hiding important logic inside libraries
+- Confusion matrix (heatmap or plot)
+- ROC curve
+- Coefficient magnitude plot
 
-The goal is **learning machine learning**, not just producing results.
+Optional (if useful):
+
+- Probability distribution
+- Decision boundary (if reduced to 2D)
+
+---
+
+## 📊 Model Stability Check (IMPORTANT)
+
+Each experiment should include a simple stability check:
+
+- Train model multiple times with different random states OR
+- Use cross-validation
+
+Then:
+
+- Compare metric variance
+- Comment on stability
+
+---
+
+## 🔁 Step-by-Step Learning Plan
+
+The agent MUST follow this exact progression.
+
+---
+
+### ✅ Step 1: Raw Logistic Regression (Baseline)
+
+- No regularization tuning (default settings)
+- No feature scaling
+
+Goal:
+
+- Understand baseline behavior
+
+---
+
+### ✅ Step 2: Add Feature Scaling
+
+- Introduce `StandardScaler`
+
+Goal:
+
+- Observe impact on:
+  - coefficients
+  - performance
+
+---
+
+### ✅ Step 3: Regularization (L2 - Ridge)
+
+- Tune `C` parameter
+
+Goal:
+
+- Understand:
+  - overfitting vs underfitting
+  - coefficient shrinkage
+
+---
+
+### ✅ Step 4: L1 Regularization (Lasso)
+
+- Use:
+
+  ```python
+  penalty='l1', solver='liblinear'
+  ```
+
+Goal:
+
+- Observe sparsity (coefficients → zero)
+
+---
+
+### ✅ Step 5: Elastic Net
+
+- Use:
+
+  ```python
+  penalty='elasticnet', solver='saga', l1_ratio=0.5
+  ```
+
+Goal:
+
+- Compare with L1 and L2
+
+---
+
+### ✅ Step 6: Threshold Tuning
+
+- Modify classification threshold (not just 0.5)
+
+Goal:
+
+- Understand precision vs recall tradeoff
+
+---
+
+## 💬 Code Requirements
+
+### Comments (MANDATORY)
+
+Every block of code must explain:
+
+- What is happening
+- Why it is done
+
+Example:
+
+```python
+# We use scaling because regularization penalizes large coefficients,
+# and feature scale directly affects coefficient magnitude.
+```
+
+---
+
+### Structure
+
+- Clear, step-by-step code
+- No hidden logic
+- No overly compact expressions
+
+---
+
+## 🔍 Comparison Mindset (VERY IMPORTANT)
+
+After each step, the agent must:
+
+- Compare results with previous step
+- Highlight:
+  - What changed
+  - Why it changed
+  - Whether it improved or not
+
+---
+
+## 🚫 What NOT to Do
+
+- Do NOT jump steps
+- Do NOT introduce new variables unnecessarily
+- Do NOT change multiple things at once
+- Do NOT optimize aggressively
+- Do NOT skip evaluation or visualization
+
+---
+
+## ✅ What TO Do
+
+- Keep experiments controlled
+- Change only ONE thing per step
+- Encourage reflection:
+  - “Why did this change happen?”
+
+---
+
+## 🧠 Core Mental Model
+
+Logistic regression:
+
+```
+linear output → sigmoid → probability → threshold → class
+```
+
+Regularization controls:
+
+```
+model complexity and confidence
+```
+
+---
+
+## 🎓 Final Goal
+
+The learner should be able to:
+
+- Explain logistic regression simply
+- Understand impact of:
+  - scaling
+  - regularization
+  - threshold
+
+- Diagnose model behavior like a real ML engineer
+
+---
+
+## 📌 Agent Role
+
+You are not just generating code.
+
+You are:
+
+- Teaching
+- Explaining
+- Guiding experiments
+- Helping compare results
+
+Always prioritize **understanding over performance**.

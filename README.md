@@ -34,7 +34,8 @@ Package-first machine learning training repository using `uv`.
 src/ml_training_practice/  # Reusable training code
 tests/                     # Unit and smoke tests
 notebooks/                 # Experiment notebooks
-scripts/                   # Small executable scripts
+scripts/linear_regression/ # Linear regression practice scripts
+scripts/logistic_regression/ # Logistic regression practice scripts
 data/raw/                  # Local raw datasets (gitignored)
 data/processed/            # Local processed datasets (gitignored)
 models/                    # Saved model artifacts (gitignored)
@@ -64,7 +65,7 @@ make notebook
 Run the polynomial degree comparison (default: degrees 1..5):
 
 ```bash
-uv run python scripts/train_housing_polynomial.py
+uv run python scripts/linear_regression/train_housing_polynomial.py
 ```
 
 Or via Make:
