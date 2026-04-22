@@ -1,4 +1,4 @@
-.PHONY: sync lint test train train-poly train-multi train-multi-scaled train-ridge-sweep train-lasso-sweep train-elastic-net-cv train-logistic-step1 notebook format
+.PHONY: sync lint test train train-poly train-multi train-multi-scaled train-ridge-sweep train-lasso-sweep train-elastic-net-cv train-logistic-step1 train-logistic-step2 traing-logistic-regression-feature-scalling notebook format
 
 sync:
 	uv sync
@@ -38,3 +38,7 @@ train-elastic-net-cv:
 
 train-logistic-step1:
 	uv run python scripts/logistic_regression/step1_raw_logistic_regression_baseline.py
+
+train-logistic-step2:
+	uv run python scripts/logistic_regression/step2_logistic_regression_with_scaling.py
+
