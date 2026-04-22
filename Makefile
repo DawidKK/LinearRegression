@@ -1,4 +1,4 @@
-.PHONY: sync lint test train train-poly train-multi train-multi-scaled train-ridge-sweep train-lasso-sweep train-elastic-net-cv train-logistic-step1 train-logistic-step2 train-logistic-step3 train-logistic-step4 train-logistic-step5 traing-logistic-regression-feature-scalling traing-logistic-regression-l2-regularization-c-tuning traing-logistic-regression-l1-lasso traing-logistic-regression-elastic-net notebook format
+.PHONY: sync lint test train train-poly train-multi train-multi-scaled train-ridge-sweep train-lasso-sweep train-elastic-net-cv train-logistic-step1 train-logistic-step2 train-logistic-step3 train-logistic-step4 train-logistic-step5 train-logistic-step6 traing-logistic-regression-feature-scalling traing-logistic-regression-l2-regularization-c-tuning traing-logistic-regression-l1-lasso traing-logistic-regression-elastic-net traing-logistic-regression-threshold-tuning notebook format
 
 sync:
 	uv sync
@@ -51,3 +51,8 @@ train-logistic-step4:
 train-logistic-step5:
 	uv run python scripts/logistic_regression/step5_logistic_regression_elastic_net.py
 
+train-logistic-step6:
+	uv run python scripts/logistic_regression/step6_logistic_regression_threshold_tuning.py
+
+traing-logistic-regression-threshold-tuning:
+	uv run python scripts/logistic_regression/step6_logistic_regression_threshold_tuning.py
